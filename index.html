@@ -6,12 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Plummet Tournament - Play Now!</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            color: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,20 +28,23 @@
         }
 
         h1 {
-            font-size: 2.5em;
-            color: #3c3c3c;
+            font-size: 3em;
+            color: #fff;
+            margin: 0;
         }
 
         p {
-            font-size: 1.2em;
-            color: #555;
+            font-size: 1.3em;
+            color: #ddd;
         }
 
         .game-container {
-            width: 80%;
+            width: 90%;
             max-width: 900px;
             height: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            overflow: hidden;
             background-color: #fff;
         }
 
@@ -50,18 +55,18 @@
         }
 
         footer {
-            margin-top: 20px;
+            margin-top: 30px;
             text-align: center;
             font-size: 0.9em;
-            color: #777;
+            color: #ddd;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Plummet Tournament - Play Now!</h1>
-        <p>Aim for the highest score and win $100! Good luck!</p>
+        <h1>Plummet Tournament</h1>
+        <p>Aim for the highest score and win $100!</p>
     </header>
 
     <div class="game-container">
