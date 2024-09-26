@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Plummet Tournament - Play Now!</title>
+    <title>Plummet Tournament</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -39,19 +39,13 @@
         }
 
         .game-container {
-            width: 100%;
-            max-width: 960px;
-            height: auto;
-            position: relative;
-            overflow: hidden;
+            width: 90%;
+            max-width: 900px;
+            height: 600px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             border-radius: 15px;
-        }
-
-        .game-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            overflow: hidden;
+            background-color: #fff;
         }
 
         footer {
@@ -59,6 +53,11 @@
             text-align: center;
             font-size: 0.9em;
             color: #ddd;
+        }
+
+        object, embed {
+            width: 100%;
+            height: 100%;
         }
     </style>
     <!-- Ruffle Script for Flash Emulation -->
@@ -68,13 +67,16 @@
 
     <header>
         <h1>Plummet Tournament</h1>
-        <p>Aim for the highest score and win $100!</p>
+        <h2>!DISCLAMER! This website is unfinished.</h2>
+        <p>Aim for the highest score and win $50!</p>
     </header>
 
-    <div class="game-container" id="game-container">
+    <div class="game-container">
         <!-- Embed Flash game using Ruffle -->
-        <object id="game-object" data="Plumet2.swf" type="application/x-shockwave-flash">
-            <embed src="Plumet2.swf" type="application/x-shockwave-flash"></embed>
+        <object data="Plumet2.swf" type="application/x-shockwave-flash">
+            <!-- Fallback if Ruffle doesn't work -->
+            <embed src="Plumet2.swf" type="application/x-shockwave-flash">
+            </embed>
         </object>
     </div>
 
@@ -82,16 +84,5 @@
         <p>Plummet Tournament | Hosted by Jared and Luke | Prize provided by Jared's brother</p>
     </footer>
 
-    <script>
-        function resizeGame() {
-            const container = document.getElementById('game-container');
-            const width = container.offsetWidth;
-            const height = (width / 16) * 9;  // Maintain 16:9 aspect ratio
-            container.style.height = height + 'px';
-        }
-
-        window.addEventListener('resize', resizeGame);
-        window.addEventListener('load', resizeGame);
-    </script>
 </body>
 </html>
