@@ -14,7 +14,7 @@ To play the game, simply visit the hosted page through the link provided by the 
 
 ## **Tournament Information**
 
-- **Prize:** $100
+- **Prize:** $50
 - **Goal:** Achieve the highest meters fallen before the game ends.
 
 ## **Technical Details**
