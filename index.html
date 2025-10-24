@@ -151,6 +151,7 @@
             width: min(1100px, 95%);
             display: grid;
             grid-template-columns: minmax(0, 1fr);
+            grid-template-columns: 2fr 1fr;
             gap: 24px;
             align-items: start;
             padding: 0 20px 60px;
@@ -212,6 +213,22 @@
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
+        .status-banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .status-banner strong {
+            color: var(--accent);
         }
 
         .info-panel {
@@ -227,6 +244,18 @@
 
         .info-section + .info-section {
             border-top: 1px solid var(--surface-border);
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--surface-light);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+            margin-right: 8px;
         }
 
         .scoreboard {
@@ -310,6 +339,7 @@
         @media (max-width: 920px) {
             .content,
             .content.details-open {
+            .content {
                 grid-template-columns: 1fr;
             }
 
@@ -333,6 +363,12 @@
 
             .info-section {
                 padding: 18px;
+            }
+
+            .status-banner {
+                flex-direction: column;
+                gap: 6px;
+                text-align: left;
             }
         }
     </style>
@@ -361,6 +397,14 @@
         </section>
 
         <aside class="info-panel panel collapsible" id="tournament-details" aria-hidden="true" hidden>
+                <div class="status-banner" role="status" aria-live="polite">
+                    <span><strong>Round in progress</strong> · Use arrow keys to stay alive</span>
+                    <span class="pill">Flash emulated via Ruffle</span>
+                </div>
+            </div>
+        </section>
+
+        <aside class="info-panel panel" id="tournament-details" hidden>
             <div class="info-section">
                 <h2>Event Overview</h2>
                 <div class="info-grid">
@@ -421,6 +465,7 @@
         let detailsOpen = false;
         let expandAnimationFrame = null;
         let collapseAnimationFrame = null;
+        const scoreboardList = document.getElementById('scoreboard');
 
         function revealTitle(isGold) {
             if (isGold) {
@@ -513,6 +558,39 @@
                 detailsPanel.setAttribute('aria-hidden', 'true');
                 collapseDetails();
             }
+        });
+
+        const scoreboardData = [
+            { placement: '1st', name: 'You?', score: 0 },
+            { placement: '2nd', name: 'Taylor', score: 0 },
+            { placement: '3rd', name: 'Jordan', score: 0 }
+        ];
+
+        function renderScoreboard(entries) {
+            scoreboardList.innerHTML = '';
+            entries.forEach(({ placement, name, score }) => {
+                const item = document.createElement('li');
+                const label = document.createElement('span');
+                label.textContent = `${placement} · ${name}`;
+                const value = document.createElement('span');
+                value.textContent = score;
+                item.appendChild(label);
+                item.appendChild(value);
+                scoreboardList.appendChild(item);
+            });
+        }
+
+        }
+
+        toggleButton.addEventListener('click', () => {
+            const isHidden = detailsPanel.hasAttribute('hidden');
+            if (isHidden) {
+                detailsPanel.removeAttribute('hidden');
+            } else {
+                detailsPanel.setAttribute('hidden', '');
+            }
+            toggleButton.setAttribute('aria-expanded', String(isHidden));
+            toggleButton.textContent = isHidden ? 'Hide tournament details' : 'View tournament details';
         });
 
         const scoreboardData = [
