@@ -150,10 +150,15 @@
         .content {
             width: min(1100px, 95%);
             display: grid;
+            grid-template-columns: minmax(0, 1fr);
             grid-template-columns: 2fr 1fr;
             gap: 24px;
             align-items: start;
             padding: 0 20px 60px;
+        }
+
+        .content.details-open {
+            grid-template-columns: 2fr 1fr;
         }
 
         .panel {
@@ -195,6 +200,19 @@
             height: 100%;
         }
 
+        .collapsible {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-12px);
+            transition: max-height 0.45s ease, opacity 0.35s ease, transform 0.35s ease;
+            pointer-events: none;
+        }
+
+        .collapsible.expanded {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         .status-banner {
             position: absolute;
             bottom: 0;
@@ -319,6 +337,8 @@
         }
 
         @media (max-width: 920px) {
+            .content,
+            .content.details-open {
             .content {
                 grid-template-columns: 1fr;
             }
@@ -373,6 +393,10 @@
                     <param name="movie" value="Plumet2.swf" />
                     <embed src="Plumet2.swf" type="application/x-shockwave-flash"></embed>
                 </object>
+            </div>
+        </section>
+
+        <aside class="info-panel panel collapsible" id="tournament-details" aria-hidden="true" hidden>
                 <div class="status-banner" role="status" aria-live="polite">
                     <span><strong>Round in progress</strong> · Use arrow keys to stay alive</span>
                     <span class="pill">Flash emulated via Ruffle</span>
@@ -436,6 +460,11 @@
         const randomChance = Math.floor(Math.random() * 50);
         const toggleButton = document.getElementById('details-toggle');
         const detailsPanel = document.getElementById('tournament-details');
+        const contentLayout = document.querySelector('.content');
+        const scoreboardList = document.getElementById('scoreboard');
+        let detailsOpen = false;
+        let expandAnimationFrame = null;
+        let collapseAnimationFrame = null;
         const scoreboardList = document.getElementById('scoreboard');
 
         function revealTitle(isGold) {
@@ -460,6 +489,97 @@
             setTimeout(() => revealTitle(true), 1000);
         } else {
             setTimeout(() => revealTitle(false), 1000);
+        }
+
+        function expandDetails() {
+            if (collapseAnimationFrame !== null) {
+                cancelAnimationFrame(collapseAnimationFrame);
+                collapseAnimationFrame = null;
+            }
+
+            detailsPanel.hidden = false;
+            detailsPanel.classList.add('expanded');
+            detailsPanel.style.maxHeight = '0px';
+            const fullHeight = detailsPanel.scrollHeight;
+            expandAnimationFrame = requestAnimationFrame(() => {
+                detailsPanel.style.maxHeight = fullHeight + 'px';
+            });
+        }
+
+        function collapseDetails() {
+            if (expandAnimationFrame !== null) {
+                cancelAnimationFrame(expandAnimationFrame);
+                expandAnimationFrame = null;
+            }
+
+            const fullHeight = detailsPanel.scrollHeight;
+            detailsPanel.style.maxHeight = fullHeight + 'px';
+            collapseAnimationFrame = requestAnimationFrame(() => {
+                detailsPanel.classList.remove('expanded');
+                detailsPanel.style.maxHeight = '0px';
+            });
+        }
+
+        detailsPanel.addEventListener('transitionend', (event) => {
+            if (event.propertyName !== 'max-height') {
+                return;
+            }
+
+            if (detailsPanel.classList.contains('expanded')) {
+                detailsPanel.style.maxHeight = 'none';
+                expandAnimationFrame = null;
+            } else {
+                detailsPanel.hidden = true;
+                detailsPanel.style.maxHeight = '';
+                contentLayout.classList.remove('details-open');
+                collapseAnimationFrame = null;
+            }
+        });
+
+        toggleButton.addEventListener('click', () => {
+            const willExpand = !detailsOpen;
+            detailsOpen = willExpand;
+            toggleButton.setAttribute('aria-expanded', String(willExpand));
+            toggleButton.textContent = willExpand ? 'Hide tournament details' : 'View tournament details';
+
+            if (willExpand) {
+                detailsPanel.setAttribute('aria-hidden', 'false');
+                contentLayout.classList.add('details-open');
+                expandDetails();
+                setTimeout(() => {
+                    const section = detailsPanel.querySelector('.info-section');
+                    if (section && typeof section.focus === 'function') {
+                        section.setAttribute('tabindex', '-1');
+                        section.focus({ preventScroll: true });
+                        section.removeAttribute('tabindex');
+                    }
+                }, 250);
+            } else {
+                detailsPanel.setAttribute('aria-hidden', 'true');
+                collapseDetails();
+            }
+        });
+
+        const scoreboardData = [
+            { placement: '1st', name: 'You?', score: 0 },
+            { placement: '2nd', name: 'Taylor', score: 0 },
+            { placement: '3rd', name: 'Jordan', score: 0 }
+        ];
+
+        function renderScoreboard(entries) {
+            scoreboardList.innerHTML = '';
+            entries.forEach(({ placement, name, score }) => {
+                const item = document.createElement('li');
+                const label = document.createElement('span');
+                label.textContent = `${placement} · ${name}`;
+                const value = document.createElement('span');
+                value.textContent = score;
+                item.appendChild(label);
+                item.appendChild(value);
+                scoreboardList.appendChild(item);
+            });
+        }
+
         }
 
         toggleButton.addEventListener('click', () => {
