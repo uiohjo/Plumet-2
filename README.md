@@ -1,43 +1,49 @@
-# **Plummet Tournament - Game Hosting Repository**
+# Plummet Tournament Hosting Repository
 
-Welcome to the official repository for hosting the unblocked version of **Plummet 2** for the Plummet Tournament! This repository is maintained to ensure smooth access to the game for all participants. If you encounter any issues, please reach out immediately.
+Welcome! This project delivers an unblocked copy of **Plummet 2** so every tournament participant can jump into the competition without installing additional software. Share the hosted link with players and they can start falling immediately.
 
-## **Overview**
-This repository is used to host an unblocked version of the game Plummet 2 to ensure participants have consistent access during the tournament.
+## Overview
 
 - **Game:** [Plummet 2](https://www.silvergames.com/en/plumet-2)
-- **Objective:** Descend as far as possible without hitting obstacles as the screen scrolls faster every 100 meters.
+- **Format:** Endless descent; the scroll speed increases every 100 meters
+- **Goal:** Survive the longest distance to top the leaderboard
 
-## **How to Access the Game**
+## Quick Start
 
-To play the game, simply visit the hosted page through the link provided by the tournament organizers. No downloads or installations are required.
+1. Share the hosted URL provided by the tournament staff.
+2. Ask players to open the link in any modern browser. No downloads or plug-ins are required.
+3. Encourage players to keep their browser tab focused—pausing or switching tabs can interrupt the run.
 
-## **Tournament Information**
+## Tournament Details
 
-- **Prize:** $50
-- **Goal:** Achieve the highest meters fallen before the game ends.
+- **Prize Pool:** $50
+- **Scoring:** The in-game meter counter automatically tracks distance. Screenshot or stream runs if you need additional verification.
 
-## **Technical Details**
+## Operations & Maintenance
 
-### **Setup and Hosting**
-1. The game files are hosted directly from this GitHub repository to ensure it remains unblocked.
-2. Any updates or maintenance will be communicated promptly to avoid downtime during the tournament.
+### Hosting
 
-### **Game Rules Enforcement**
-- This page serves the game and is not responsible for any rule enforcement or participant conduct.
-- Game scores are recorded automatically by the game; ensure your session is uninterrupted for accurate results.
+- Game assets are served directly from this repository to minimize the risk of blocks or timeouts.
+- Update deployments are announced to organizers ahead of time so live events remain uninterrupted.
 
-## **Troubleshooting**
+### Fair Play
 
-If you encounter any issues accessing the game:
-1. Refresh the page or try accessing it from a different browser.
-2. Clear your browser cache and cookies.
-3. If the game still doesn’t load, contact the support team immediately.
+- This repository only provides the game build. Tournament staff remain responsible for enforcing rules, validating scores, and resolving disputes.
+- Remind players to report technical issues immediately so affected runs can be reviewed.
 
-## **Contact Us**
+## Troubleshooting Tips
 
-For any technical assistance or inquiries, please contact the technical support team or your assigned tournament administrator.
+If the game fails to load or behaves unexpectedly, try the following steps in order:
+
+1. Reload the page.
+2. Open the link in a different browser or an incognito/private window.
+3. Clear the browser cache and cookies.
+4. Contact the tournament technical lead so we can investigate hosting or network issues.
+
+## Support
+
+Need help or have a suggestion? Reach out to the tournament’s technical contact or your assigned administrator before making repository changes.
 
 ---
 
-**Note:** This repository is maintained backstage for tournament operations. Please do not make changes unless authorized.
+This repository is maintained for backstage operations. Please avoid direct edits unless you have been authorized to do so.

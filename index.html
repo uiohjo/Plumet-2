@@ -8,43 +8,62 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
+        :root {
+            color-scheme: dark;
+            --accent: #ffd166;
+            --accent-strong: #ffb703;
+            --surface: rgba(9, 17, 40, 0.85);
+            --surface-light: rgba(255, 255, 255, 0.08);
+            --surface-border: rgba(255, 255, 255, 0.18);
+            --text-muted: #dfe6f5;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
             color: #fff;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.1), transparent 50%),
+                        linear-gradient(135deg, #1d2671, #c33764);
+            background-size: 400% 400%;
+            animation: gradientAnimation 18s ease infinite;
             text-align: center;
-            position: relative;
-            animation: gradientAnimation 10s ease infinite;
-            background: linear-gradient(135deg, #1d2671, #c33764);
-            background-size: 400% 400%; /* Increase size for smooth transition */
         }
 
-        /* Background Gradient Animation */
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            body {
+                animation: none;
+                background-size: cover;
+            }
+        }
+
         header {
-            margin-bottom: 30px;
+            padding: 40px 20px 10px;
             position: relative;
             z-index: 1;
+            width: min(960px, 100%);
         }
 
         h1 {
-            font-size: 3.5em;
+            font-size: clamp(2.5rem, 5vw, 3.8rem);
             margin: 0;
-            opacity: 0; /* Start invisible for animation */
-            transform: translateY(-50px); /* Start above the original position */
-            animation: titleReveal 1s forwards; /* Animation for title reveal */
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: titleReveal 1s forwards;
         }
 
         @keyframes titleReveal {
@@ -53,7 +72,7 @@
                 transform: translateY(-50px);
             }
             50% {
-                transform: translateY(20px) scale(1.1);
+                transform: translateY(12px) scale(1.05);
             }
             100% {
                 opacity: 1;
@@ -74,20 +93,21 @@
         }
 
         .gold-title {
-            background: linear-gradient(90deg, #ffcc00, #ffd700, #ffcc00); /* Gold gradient */
+            background: linear-gradient(90deg, #ffcc00, #ffd700, #ffcc00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: shimmer 1.5s infinite; /* Shimmer effect */
+            animation: shimmer 1.6s infinite;
         }
 
         .rarity-text {
             font-size: 1.5em;
-            color: #ffcc00; /* Gold color */
+            color: var(--accent);
             margin-top: 10px;
-            opacity: 0; /* Start invisible for animation */
-            transform: translateY(10px); /* Start slightly below the original position */
-            animation: rarityReveal 1s forwards; /* Animation for rarity reveal */
-            display: none; /* Start hidden */
+            opacity: 0;
+            transform: translateY(10px);
+            animation: rarityReveal 1s forwards;
+            display: none;
+            letter-spacing: 0.4em;
         }
 
         @keyframes rarityReveal {
@@ -101,29 +121,73 @@
             }
         }
 
-        p {
-            font-size: 1.5em;
-            color: #eee;
-            margin: 10px 0 20px;
+        header p {
+            font-size: 1.2em;
+            color: var(--text-muted);
+            margin: 12px 0 24px;
+        }
+
+        .cta-button {
+            appearance: none;
+            border: 2px solid var(--accent-strong);
+            background: var(--surface);
+            color: #fff;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-button:hover,
+        .cta-button:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 209, 102, 0.4);
+            outline: none;
+        }
+
+        .content {
+            width: min(1100px, 95%);
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            align-items: start;
+            padding: 0 20px 60px;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .panel h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .game-wrapper {
+            position: relative;
         }
 
         .game-container {
             width: 100%;
-            max-width: 960px;
-            height: auto;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-            border-radius: 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s;
-            z-index: 1;
+            border-radius: 16px;
+            background-color: rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            min-height: 320px;
         }
 
         .game-container:hover {
-            transform: scale(1.03);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+            transform: scale(1.01);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
         }
 
         .game-container object {
@@ -131,30 +195,160 @@
             height: 100%;
         }
 
+        .status-banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6));
+            padding: 10px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        .status-banner strong {
+            color: var(--accent);
+        }
+
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .info-section {
+            padding: 20px 22px;
+            text-align: left;
+        }
+
+        .info-section + .info-section {
+            border-top: 1px solid var(--surface-border);
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: var(--surface-light);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+            margin-right: 8px;
+        }
+
+        .scoreboard {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0 0;
+        }
+
+        .scoreboard li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .scoreboard li span {
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .info-card {
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.95rem;
+        }
+
+        .info-card strong {
+            display: block;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .controls-list {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 0.95rem;
+        }
+
+        .controls-list li + li {
+            margin-top: 6px;
+        }
+
         footer {
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #ddd;
-            position: relative;
-            z-index: 1;
+            margin: 40px 0 20px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.75);
         }
 
         footer p {
             margin: 5px 0;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.5em;
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        @media (max-width: 920px) {
+            .content {
+                grid-template-columns: 1fr;
             }
 
+            header {
+                padding-bottom: 20px;
+            }
+
+            .game-wrapper {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 600px) {
             .rarity-text {
                 font-size: 1.2em;
             }
 
-            p {
-                font-size: 1.2em;
+            header p {
+                font-size: 1rem;
+            }
+
+            .info-section {
+                padding: 18px;
+            }
+
+            .status-banner {
+                flex-direction: column;
+                gap: 6px;
+                text-align: left;
             }
         }
     </style>
@@ -165,57 +359,146 @@
 
     <header>
         <h1 id="title">Plummet Tournament</h1>
-        <div id="rarity" class="rarity-text">SSR</div> <!-- Rarity text -->
-        <p>Aim for the highest score and win $50!</p>
+        <div id="rarity" class="rarity-text" aria-hidden="true">SSR</div>
+        <p>Drop in, dodge the spikes, and top the leaderboard to claim the $50 prize.</p>
+        <button id="details-toggle" class="cta-button" type="button" aria-expanded="false" aria-controls="tournament-details">
+            View tournament details
+        </button>
     </header>
 
-    <div class="game-container" id="game-container">
-        <!-- Embed Flash game using Ruffle -->
-        <object id="game-object" data="Plumet2.swf" type="application/x-shockwave-flash">
-            <param name="movie" value="Plumet2.swf" />
-            <embed src="Plumet2.swf" type="application/x-shockwave-flash"></embed>
-        </object>
-    </div>
+    <main class="content">
+        <section class="game-wrapper panel" aria-label="Game window">
+            <div class="game-container" id="game-container">
+                <object id="game-object" data="Plumet2.swf" type="application/x-shockwave-flash">
+                    <param name="movie" value="Plumet2.swf" />
+                    <embed src="Plumet2.swf" type="application/x-shockwave-flash"></embed>
+                </object>
+                <div class="status-banner" role="status" aria-live="polite">
+                    <span><strong>Round in progress</strong> · Use arrow keys to stay alive</span>
+                    <span class="pill">Flash emulated via Ruffle</span>
+                </div>
+            </div>
+        </section>
+
+        <aside class="info-panel panel" id="tournament-details" hidden>
+            <div class="info-section">
+                <h2>Event Overview</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <strong>Prize Pool</strong>
+                        $50 winner take all courtesy of Jared's brother.
+                    </div>
+                    <div class="info-card">
+                        <strong>Hosts</strong>
+                        Organized by Jared &amp; Luke. Streamed live from the venue lounge.
+                    </div>
+                    <div class="info-card">
+                        <strong>Format</strong>
+                        Single attempt. Highest score at session end wins.
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h2>Controls</h2>
+                <ul class="controls-list">
+                    <li><strong>Left / Right Arrow:</strong> Move your character.</li>
+                    <li><strong>Space:</strong> Pause.</li>
+                    <li><strong>Esc:</strong> Reset to the lobby screen.</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h2>Live Leaderboard</h2>
+                <p class="sr-only" id="leaderboard-help">Leaderboard updates when the hosts record new scores.</p>
+                <ul class="scoreboard" aria-describedby="leaderboard-help" id="scoreboard"></ul>
+            </div>
+
+            <div class="info-section">
+                <h2>House Rules</h2>
+                <ul class="controls-list">
+                    <li>No restarts once your attempt begins.</li>
+                    <li>Hosts verify all scores before they hit the board.</li>
+                    <li>Be respectful to other competitors—trash talk stays fun.</li>
+                </ul>
+            </div>
+        </aside>
+    </main>
 
     <footer>
         <p>Plummet Tournament | Hosted by Jared and Luke</p>
-        <p>Prize provided by Jared's brother</p>
+        <p>Prize provided by Jared's brother · Flash preserved with Ruffle</p>
     </footer>
 
     <script>
-        // Randomly change title color on load
         const titleElement = document.getElementById('title');
         const rarityElement = document.getElementById('rarity');
-        const randomChance = Math.floor(Math.random() * 50); // Random number between 0 and 49
+        const randomChance = Math.floor(Math.random() * 50);
+        const toggleButton = document.getElementById('details-toggle');
+        const detailsPanel = document.getElementById('tournament-details');
+        const scoreboardList = document.getElementById('scoreboard');
 
-        // Trigger reveal animation
         function revealTitle(isGold) {
             if (isGold) {
-                titleElement.classList.add('gold-title'); // Apply gold title class
-                titleElement.innerText = 'GOLDEN Plummet Tournament'; // Change text for gold title
-                rarityElement.style.display = 'block'; // Show rarity
-                rarityElement.style.opacity = 1; // Make rarity visible
-                rarityElement.style.transform = 'translateY(0)'; // Move to original position
+                titleElement.classList.add('gold-title');
+                titleElement.innerText = 'GOLDEN Plummet Tournament';
+                rarityElement.style.display = 'block';
+                requestAnimationFrame(() => {
+                    rarityElement.style.opacity = 1;
+                    rarityElement.style.transform = 'translateY(0)';
+                });
             } else {
-                rarityElement.style.display = 'none'; // Hide rarity
-                rarityElement.style.opacity = 0; // Keep rarity invisible
-                rarityElement.style.transform = 'translateY(10px)'; // Keep below original position
+                rarityElement.style.display = 'none';
+                rarityElement.style.opacity = 0;
+                rarityElement.style.transform = 'translateY(10px)';
             }
-            titleElement.style.opacity = 1; // Make title visible
-            titleElement.style.transform = 'translateY(0)'; // Move to original position
+            titleElement.style.opacity = 1;
+            titleElement.style.transform = 'translateY(0)';
         }
 
-        // Decide if the title should be gold
-        if (randomChance === 0) { // 1 in 50 chance
-            setTimeout(() => revealTitle(true), 1000); // Show gold title after 1 second
+        if (randomChance === 0) {
+            setTimeout(() => revealTitle(true), 1000);
         } else {
-            setTimeout(() => revealTitle(false), 1000); // Show normal title after 1 second
+            setTimeout(() => revealTitle(false), 1000);
         }
+
+        toggleButton.addEventListener('click', () => {
+            const isHidden = detailsPanel.hasAttribute('hidden');
+            if (isHidden) {
+                detailsPanel.removeAttribute('hidden');
+            } else {
+                detailsPanel.setAttribute('hidden', '');
+            }
+            toggleButton.setAttribute('aria-expanded', String(isHidden));
+            toggleButton.textContent = isHidden ? 'Hide tournament details' : 'View tournament details';
+        });
+
+        const scoreboardData = [
+            { placement: '1st', name: 'You?', score: 0 },
+            { placement: '2nd', name: 'Taylor', score: 0 },
+            { placement: '3rd', name: 'Jordan', score: 0 }
+        ];
+
+        function renderScoreboard(entries) {
+            scoreboardList.innerHTML = '';
+            entries.forEach(({ placement, name, score }) => {
+                const item = document.createElement('li');
+                const label = document.createElement('span');
+                label.textContent = `${placement} · ${name}`;
+                const value = document.createElement('span');
+                value.textContent = score;
+                item.appendChild(label);
+                item.appendChild(value);
+                scoreboardList.appendChild(item);
+            });
+        }
+
+        renderScoreboard(scoreboardData);
 
         function resizeGame() {
             const container = document.getElementById('game-container');
             const width = container.offsetWidth;
-            const height = (width / 16) * 9;  // Maintain 16:9 aspect ratio
+            const height = (width / 16) * 9;
             container.style.height = height + 'px';
         }
 
